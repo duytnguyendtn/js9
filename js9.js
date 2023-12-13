@@ -24314,52 +24314,52 @@ JS9.instantiatePlugin = function(el, plugin, winhandle, args){
     }
     // save returned light id and type ("virtual", "light", "div")
     if( !el ){
-	// save id
-	instance.id = plugin.name;
-	// save type
-	instance.winType = "virtual";
+		// save id
+		instance.id = plugin.name;
+		// save type
+		instance.winType = "virtual";
     } else if( winhandle ){
-	// save id
-	instance.id = divjq.attr("id") || plugin.name;
-	// save type
-	instance.winType = "light";
-	instance.winHandle = winhandle;
-	// this is the original div
-	instance.odivjq = divjq;
-	// this is the div which the instance sees
-	instance.divjq = divjq;
-	// the light window is the the outer div
-	instance.outerdivjq = instance.divjq.closest(JS9.lightOpts[JS9.LIGHTWIN].top);
+		// save id
+		instance.id = divjq.attr("id") || plugin.name;
+		// save type
+		instance.winType = "light";
+		instance.winHandle = winhandle;
+		// this is the original div
+		instance.odivjq = divjq;
+		// this is the div which the instance sees
+		instance.divjq = divjq;
+		// the light window is the the outer div
+		instance.outerdivjq = instance.divjq.closest(JS9.lightOpts[JS9.LIGHTWIN].top);
     } else {
-	// save id
-	instance.id = divjq.attr("id") || plugin.name;
-	// save type
-	instance.winType = "div";
-	// should this plugin div be hidden at the start?
-	if( $.inArray(instance.name, JS9.globalOpts.hiddenPluginDivs) >=0 ){
-	    visible = "hidden";
-	}
-	// wrap the target div in a container div
-	divjq.wrap(`<div class='JS9PluginContainer' style='visibility: ${visible}'>`);
-	// this is the original div
-	instance.odivjq = divjq;
-	// this is the div which the instance sees
-	instance.divjq = divjq;
-	// add classes for easier CSS specification
-	instance.divjq.addClass(`${plugin.xclass}Plugin`).addClass("JS9Plugin");
-	// add id
-	if( !instance.odivjq.attr("id") ){
-	    instance.odivjq.attr("id", instance.id);
-	}
-	// the wrapper plugincontainer is the the outer div
-	instance.outerdivjq = instance.divjq.closest(".JS9PluginContainer");
-	// add the toolbar to the container, if necessary
-	if( divjq.data("toolbarseparate") !== false ){
-	    if( plugin.opts.toolbarSeparate || divjq.data("toolbarseparate") ){
-		ndiv = `<div class='${JS9.lightOpts[JS9.LIGHTWIN].dragBar.substr(1)}'>`;
-		$(ndiv).insertBefore(instance.divjq);
-	    }
-	}
+		// save id
+		instance.id = divjq.attr("id") || plugin.name;
+		// save type
+		instance.winType = "div";
+		// should this plugin div be hidden at the start?
+		if( $.inArray(instance.name, JS9.globalOpts.hiddenPluginDivs) >=0 ){
+			visible = "hidden";
+		}
+		// wrap the target div in a container div
+		divjq.wrap(`<div class='JS9PluginContainer' style='visibility: ${visible}'>`);
+		// this is the original div
+		instance.odivjq = divjq;
+		// this is the div which the instance sees
+		instance.divjq = divjq;
+		// add classes for easier CSS specification
+		instance.divjq.addClass(`${plugin.xclass}Plugin`).addClass("JS9Plugin");
+		// add id
+		if( !instance.odivjq.attr("id") ){
+			instance.odivjq.attr("id", instance.id);
+		}
+		// the wrapper plugincontainer is the the outer div
+		instance.outerdivjq = instance.divjq.closest(".JS9PluginContainer");
+		// add the toolbar to the container, if necessary
+		if( divjq.data("toolbarseparate") !== false ){
+			if( plugin.opts.toolbarSeparate || divjq.data("toolbarseparate") ){
+			ndiv = `<div class='${JS9.lightOpts[JS9.LIGHTWIN].dragBar.substr(1)}'>`;
+			$(ndiv).insertBefore(instance.divjq);
+			}
+		}
     }
     // backlink this instance into the plugin
     instance.plugin = plugin;
