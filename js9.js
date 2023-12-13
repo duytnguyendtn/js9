@@ -110,6 +110,7 @@ JS9.PIXEL_RATIO = (function(){
 
 // global options
 JS9.globalOpts = {
+	helperURL: "http://127.0.0.1",
     helperType: "none",		// one of: sock.io, get, post, none
     helperPort: 2718,		// default port for node.js helper
     requireHelper: false,       // throw error if helper is not available?
