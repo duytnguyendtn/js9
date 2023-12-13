@@ -32,7 +32,7 @@ JS9.COPYRIGHT = "Copyright (c) 2012-2022 Smithsonian Institution";
 JS9.ABOUT = `JS9 ${JS9.VERSION}: astronomical image display everywhere\nEric Mandel, Alexey Vikhlinin\n${JS9.COPYRIGHT}`;
 
 // internal defaults (not usually changed by users)
-JS9.DEFID = "JS9";		// default JS9 display id
+JS9.DEFID = "JS9-DEFAULT";		// default JS9 display id
 JS9.WIDTH = 512;	        // width of js9 canvas
 JS9.HEIGHT = 512;		// height of js9 canvas
 JS9.ANON = "Anonymous";		// name to use for images with no name
