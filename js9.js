@@ -24264,6 +24264,7 @@ JS9.RegisterPlugin = function(xclass, xname, func, opts){
 
 // create a new plugin instance, attached to the specified element
 JS9.instantiatePlugin = function(el, plugin, winhandle, args){
+	console.log("### Instantiating Plugin: [%s]", plugin.name)
     let i, tplugin, instance, divid, divjq, pdivjq, html, ndiv, did;
     let visible = "visible";
     // if plugin is a string, get plugin object by name
@@ -24410,7 +24411,9 @@ JS9.instantiatePlugin = function(el, plugin, winhandle, args){
 	    }
 	}
 	// find the display for this plugin, using data-js9id or instance id
+	console.log("### js9id: [%s], instance.id: [%s]", instance.divjq.data("js9id"), instance.id);
 	divid = instance.divjq.data("js9id") || instance.id;
+	
 	if( divid === "*" ){
 	    if( plugin.opts.dynamicSelect ){
 		// use first display as the primary for a dynamic plugin
