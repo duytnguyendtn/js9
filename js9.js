@@ -28222,6 +28222,9 @@ JS9.init = function(){
     }
     // set debug flag
     JS9.DEBUG = JS9.DEBUG || JS9.globalOpts.debug || 0;
+	console.log("### GlobalOpt debug level: %s", JS9.globalOpts.debug)
+	JS9.DEBUG = 10
+	console.log("### Debug level set: %s", JS9.DEBUG)
     // init main display(s)
     $("div.JS9").each((index, element) => {
 	JS9.checkNew(new JS9.Display($(element)));
