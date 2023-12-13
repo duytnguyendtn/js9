@@ -327,8 +327,9 @@ JS9.globalOpts = {
     internalColorPicker: true,       // use HTML5 color picker, if available?
     newWindowWidth:  530,             // width of LoadWindow("new")
     newWindowHeight: 625,             // height of LoadWindow("new")
-    debug: 0                             // debug level
+    debug: 10                             // debug level
 };
+console.log("### GlobalOpt debug level (immediately after def): %s", JS9.globalOpts.debug)
 
 // favorites are used in dialog boxes and control boxes
 JS9.favorites = {
