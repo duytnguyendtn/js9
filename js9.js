@@ -21680,8 +21680,17 @@ JS9.lookupImage = function(id, display){
 // return the display for the specified id
 // id can be a display object or an id from a display object
 JS9.lookupDisplay = function(id, mustExist){
-    let i;
+	let i;
+	
+	console.log("### lookupDisplay for id: [%s]", id)
+	console.log("### CurrentDisplays:")
+	for(i=0; i<JS9.displays.length; i++){
+		console.log("###\t\tDisplay %s: i:[%s], id:[%s], oid:[%s]", i, JS9.displays[i], JS9.displays[i].id, JS9.displays[i].oid)	
+	}
+
+    
     const regexp = new RegExp(`[-_]?(${JS9.PLUGINS})$`);
+	console.log("### lookupDisplay regex: [%s]", regexp)
     // default is the id must exist
     if( mustExist === undefined ){
         mustExist = true;
