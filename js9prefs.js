@@ -12,7 +12,11 @@ var JS9Prefs = {
         "analysisWrappers": "./analysis-wrappers"
     },
     "imageOpts": {
-	"colormap":         "grey",
-	"scale":            "linear"
-    }
+        "colormap":         "grey",
+        "scale":            "linear"
+    },
+    "socketioOpts": {
+        "path":         "/js9Helper/socket.io",
+        "jupyter":      "true"
+    },
 }

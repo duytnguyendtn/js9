@@ -11634,9 +11634,17 @@ JS9.Helper.prototype.connect = function(type){
             JS9.error("port missing for helper");
         }
         // ignore port on url, add our own
-        this.url = `${this.url.replace(/:[0-9][0-9]*$/, "")}:${JS9.globalOpts.helperPort}`;
+        if (JS9.socketioOpts.hasOwnProperty('jupyter') && JS9.socketioOpts.jupyter === "true"){
+            if( JS9.DEBUG ){
+                JS9.log(`JS9 helper: Using Jupyter mode`); 
+            }
+            sockbase = JS9.socketioOpts.path.substring(1);
+        } else {
+            // ignore port on url, add our own
+            this.url = `${this.url.replace(/:[0-9][0-9]*$/, "")}:${JS9.globalOpts.helperPort}`;
+            sockbase = "socket.io";
+        }
         // which version of socket.io?
-        sockbase = "socket.io";
         // use min version for production, as per migration docs
         if( JS9.DEBUG <= 2 ){
             sockfile  = "socket.io.min.js";
