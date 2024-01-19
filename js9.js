@@ -21697,8 +21697,6 @@ JS9.lookupDisplay = function(id, mustExist){
     console.log("### CurrentDisplays:")
     for(i=0; i<JS9.displays.length; i++){
         console.log("###\t\tDisplay %s: i:[%s], id:[%s], oid:[%s]", i, JS9.displays[i], JS9.displays[i].id, JS9.displays[i].oid)    
-		console.log("###\t\tDisplay %s: i:[%s], id:[%s], oid:[%s]", i, JS9.displays[i], JS9.displays[i].id, JS9.displays[i].oid)	
-        console.log("###\t\tDisplay %s: i:[%s], id:[%s], oid:[%s]", i, JS9.displays[i], JS9.displays[i].id, JS9.displays[i].oid)    
     }
 
     
