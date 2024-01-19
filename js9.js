@@ -21691,17 +21691,19 @@ JS9.lookupImage = function(id, display){
 // return the display for the specified id
 // id can be a display object or an id from a display object
 JS9.lookupDisplay = function(id, mustExist){
-	let i;
-	
-	console.log("### lookupDisplay for id: [%s]", id)
-	console.log("### CurrentDisplays:")
-	for(i=0; i<JS9.displays.length; i++){
+    let i;
+
+    console.log("### lookupDisplay for id: [%s]", id)
+    console.log("### CurrentDisplays:")
+    for(i=0; i<JS9.displays.length; i++){
+        console.log("###\t\tDisplay %s: i:[%s], id:[%s], oid:[%s]", i, JS9.displays[i], JS9.displays[i].id, JS9.displays[i].oid)    
 		console.log("###\t\tDisplay %s: i:[%s], id:[%s], oid:[%s]", i, JS9.displays[i], JS9.displays[i].id, JS9.displays[i].oid)	
-	}
+        console.log("###\t\tDisplay %s: i:[%s], id:[%s], oid:[%s]", i, JS9.displays[i], JS9.displays[i].id, JS9.displays[i].oid)    
+    }
 
     
     const regexp = new RegExp(`[-_]?(${JS9.PLUGINS})$`);
-	console.log("### lookupDisplay regex: [%s]", regexp)
+    console.log("### lookupDisplay regex: [%s]", regexp)
     // default is the id must exist
     if( mustExist === undefined ){
         mustExist = true;
@@ -24274,7 +24276,7 @@ JS9.RegisterPlugin = function(xclass, xname, func, opts){
 
 // create a new plugin instance, attached to the specified element
 JS9.instantiatePlugin = function(el, plugin, winhandle, args){
-	console.log("### Instantiating Plugin: [%s]", plugin.name)
+    console.log("### Instantiating Plugin: [%s]", plugin.name)
     let i, tplugin, instance, divid, divjq, pdivjq, html, ndiv, did;
     let visible = "visible";
     // if plugin is a string, get plugin object by name
@@ -24423,7 +24425,7 @@ JS9.instantiatePlugin = function(el, plugin, winhandle, args){
         // find the display for this plugin, using data-js9id or instance id
         console.log("### js9id: [%s], instance.id: [%s]", instance.divjq.data("js9id"), instance.id);
         divid = instance.divjq.data("js9id") || instance.id;
-	
+
         if( divid === "*" ){
             if( plugin.opts.dynamicSelect ){
                 // use first display as the primary for a dynamic plugin
@@ -28245,9 +28247,9 @@ JS9.init = function(){
     }
     // set debug flag
     JS9.DEBUG = JS9.DEBUG || JS9.globalOpts.debug || 0;
-	console.log("### GlobalOpt debug level: %s", JS9.globalOpts.debug)
-	JS9.DEBUG = 10
-	console.log("### Debug level set: %s", JS9.DEBUG)
+    console.log("### GlobalOpt debug level: %s", JS9.globalOpts.debug)
+    JS9.DEBUG = 10
+    console.log("### Debug level set: %s", JS9.DEBUG)
     // init main display(s)
     $("div.JS9").each((index, element) => {
         JS9.checkNew(new JS9.Display($(element)));
