@@ -49,7 +49,8 @@ JS9.INVSIZE = 1024;                // size of inverse array
 JS9.HISTSIZE = 16384;                // size of histogram equalization array
 
 const href = document.location.href;
-JS9.INSTALLDIR = (href.substring(0, href.indexOf("/lab/")) || href.substring(0, href.indexOf("/js9"))) + "/static/js9/";                // prefix to get to js9 install directory
+JS9.ROOTDIR = (href.substring(0, href.indexOf("/lab/")) || href.substring(0, href.indexOf("/js9")))
+JS9.INSTALLDIR =  JS9.ROOTDIR + "/static/js9/";                // prefix to get to js9 install directory
 JS9.TOROOT="";                        // prefix to get to data file from install
 JS9.PLUGINS="";                        // regexp list of plugins
 JS9.LIGHTWIN = "dhtml";                // light window type: choice of dhtml
@@ -11641,6 +11642,7 @@ JS9.Helper.prototype.connect = function(type){
             if( JS9.DEBUG ){
                 JS9.log(`JS9 helper: Using Jupyter mode`); 
             }
+            this.url = JS9.ROOTDIR
             sockbase = JS9.socketioOpts.path.substring(1);
         } else {
             // ignore port on url, add our own
