@@ -11473,6 +11473,7 @@ JS9.Helper.prototype.connect = function(type){
         }
     };
     const connectHelper = (url) => {
+        console.log("### Starting connection to helper url: " + url)
         // connect to helper
         $.ajax({
             url: url,
@@ -11483,10 +11484,12 @@ JS9.Helper.prototype.connect = function(type){
                 // if there is no io object, we didn't really succeed
                 // can happen, for example, in the Jupyter environment
                 if( typeof io === "undefined" ){
+                console.log("### socket io object is undefined")
                     failedHelper("socket io object is undefined", null);
                     return;
                 }
                 // connect to the helper
+                console.log("### Connecting to socketio url: " + url + " with options: " + JS9.socketioOpts)
                 this.socket = io.connect(this.url, JS9.socketioOpts);
                 // on-event processing
                 this.socket.on("connect", () => {
