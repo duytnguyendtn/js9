@@ -16,7 +16,6 @@ var JS9Prefs = {
         "scale":            "linear"
     },
     "socketioOpts": {
-        "path":         "/js9Helper/socket.io",
         "jupyter":      "true"
     },
 }
