@@ -912,7 +912,7 @@ const pageReady = function(socket, obj, cbfunc, tries){
 	    } else {
 		// it's an error
 		if( cbfunc ){
-		    cbfunc(`ERROR: ${targets.length} JS9 instance(s) found with id ${obj.id} (${obj.cmd})`);
+		    cbfunc(`ERROR (pageReady): ${targets.length} JS9 instance(s) found with id ${obj.id} (${obj.cmd})`);
 		}
 	    }
 	}
@@ -975,7 +975,7 @@ const sendMsg = function(socket, obj, cbfunc) {
 	}
 	// it's an error
 	if( cbfunc ){
-            cbfunc(`ERROR: ${targets.length} JS9 instance(s) found with id ${obj.id} (${obj.cmd})`);
+            cbfunc(`ERROR (sendmsg): ${targets.length} JS9 instance(s) found with id ${obj.id} (${obj.cmd})`);
 	}
     }
 };
