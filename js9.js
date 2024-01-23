@@ -11490,7 +11490,7 @@ JS9.Helper.prototype.connect = function(type){
                     return;
                 }
                 // connect to the helper
-                console.log("### Connecting to socketio url: " + url + " with options: " + JSON.stringify(JS9.socketioOpts))
+                console.log("### Connecting to socketio url: " + this.url + " with options: " + JSON.stringify(JS9.socketioOpts))
                 this.socket = io.connect(this.url, JS9.socketioOpts);
                 // on-event processing
                 this.socket.on("connect", () => {
