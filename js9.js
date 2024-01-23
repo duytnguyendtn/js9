@@ -11517,11 +11517,11 @@ JS9.Helper.prototype.connect = function(type){
                     $(document).trigger("JS9:connected",
                                         {type: "socket.io", status: "OK"});
                 });
-                this.socket.on("connect_error", () => {
+                this.socket.on("connect_error", (err) => {
                     this.connected = false;
                     this.helper = false;
                     if( JS9.DEBUG > 1 ){
-                        JS9.log("JS9 helper: connect error");
+                        JS9.log(`JS9 helper: connect error: ${err.message}`);
                     }
                 });
                 this.socket.on("connect_timeout", () => {
