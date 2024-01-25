@@ -10,7 +10,6 @@ function randID(length) {
 
 let params = new URLSearchParams(document.location.search)
 let frameID = params.get("frameid") || randID(4)
-alert("FrameID: " + frameID)
 
 let frontendID = "JS9-" + frameID
 var elements = ["", "Menubar", "Toolbar", "Statusbar"];
