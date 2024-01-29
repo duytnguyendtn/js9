@@ -77,7 +77,7 @@ const globalOpts = {
     textEncoding:     "ascii",     // encoding for returned stdout from exec
     rmWorkDir:        true,        // remove workdir on disconnect?
     rmWorkDelay:      15000,       // delay before removing workdir
-    remoteMsgs:       1,           // -1 => pageid only, 0 => local only,
+    remoteMsgs:       3,           // -1 => pageid only, 0 => local only,
                                    // 1 => same, 2 => local->all 3 => all->all
     remoteMsgsHeader: "x-forwarded-for"
 };
