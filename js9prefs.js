@@ -14,5 +14,8 @@ var JS9Prefs = {
     "imageOpts": {
 	"colormap":         "grey",
 	"scale":            "linear"
-    }
+    },
+    "socketioOpts": {
+        "jupyter": "true"
+    },
 }
