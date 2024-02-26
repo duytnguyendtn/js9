@@ -416,7 +416,8 @@ var JS9 = (function () {
         reconnectionDelay: 1000,
         reconnectionDelayMax: 10000,
         reconnectionAttempts: 100,
-        timeout: JS9.globalOpts.htimeout
+        timeout: JS9.globalOpts.htimeout,
+        path: JS9.SUBDIR + "/js9Helper/socket.io"
     };
     // defaults for blending
     JS9.blendOpts = {
@@ -11562,11 +11563,11 @@ var JS9 = (function () {
                         $(document).trigger("JS9:connected",
                             { type: "socket.io", status: "OK" });
                     });
-                    this.socket.on("connect_error", () => {
+                    this.socket.on("connect_error", (err) => {
                         this.connected = false;
                         this.helper = false;
                         if (JS9.DEBUG > 1) {
-                            JS9.log("JS9 helper: connect error");
+                            JS9.log(`JS9 helper: connect error: ${err.message}`);
                         }
                     });
                     this.socket.on("connect_timeout", () => {
@@ -11683,9 +11684,17 @@ var JS9 = (function () {
                     JS9.error("port missing for helper");
                 }
                 // ignore port on url, add our own
-                this.url = `${this.url.replace(/:[0-9][0-9]*$/, "")}:${JS9.globalOpts.helperPort}`;
+                if (JS9.socketioOpts.hasOwnProperty('jupyter') && JS9.socketioOpts.jupyter === "true"){
+                    if( JS9.DEBUG ){
+                        JS9.log(`JS9 helper: Using Jupyter mode`); 
+                    }
+                    sockbase = JS9.socketioOpts.path.substring(1);
+                } else {
+                    // ignore port on url, add our own
+                    this.url = `${this.url.replace(/:[0-9][0-9]*$/, "")}:${JS9.globalOpts.helperPort}`;
+                    sockbase = "socket.io";
+                }
                 // which version of socket.io?
-                sockbase = "socket.io";
                 // use min version for production, as per migration docs
                 if (JS9.DEBUG <= 2) {
                     sockfile = "socket.io.min.js";
