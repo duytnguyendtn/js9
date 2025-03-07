@@ -27484,6 +27484,12 @@ JS9.mkPublic("UnremoveRegions", function(...args){
       try { opts = JSON.parse(opts); }
       catch (e) { opts = {}; }
     }
+    // create blob if file contents directly provided
+    if (opts?.blob) {
+      const blob = new Blob([file], { type: "text/plain" });
+      // override the file obj as a blob
+      file = blob;
+    }
     // convert blob to string
     if (typeof file === "object") {
       s = file.path || file.name;
