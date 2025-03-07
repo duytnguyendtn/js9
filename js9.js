@@ -21889,101 +21889,101 @@ JS9.loadScript = function(url, func, error){
     head.appendChild(script);
 };
 
-// fetch a file URL (as a blob) and process it
-// (as of 2/2015: can't use $.ajax to retrieve a blob: use low-level xhr)
-JS9.fetchURL = function(name, url, opts, handler){
-    let nurl;
-    const xhr = new XMLHttpRequest();
-    // opts is optional
-    opts = opts || {};
-    // sanity check
-    if( !name && !url ){
-	JS9.error("invalid url specification for fetchURL");
-    }
-    // either url or name can be blank
-    if( !url ){
-	url = name;
-	name = /([^\\/]+)$/.exec(url)[1];
-    }
-    if( !name ){
-	name = /([^\\/]+)$/.exec(url)[1];
-    }
-    // use fits proxy, if necessary
-    if( opts.proxy && JS9.globalOpts.cgiProxy              &&
-	url.match(/\.(fits|ftz|fz|fits\.gz|fits\.bz2)(\?.*)?$/) ){
-	url = `${JS9.globalOpts.cgiProxy}?fits=${url}`;
-    }
-    // avoid the cache (Safari is especially aggressive) for FITS files
-    if( !opts.allowCache && !url.match(/\?/) ){
-	nurl = `${url}?r=${Math.random()}`;
-    } else {
-	nurl = url;
-    }
-    // change $JS9_DIR back to install dir
-    nurl = nurl.replace(/^\${JS9_DIR}\//,JS9.INSTALLDIR);
-    // set up connection
-    xhr.open("GET", nurl, true);
-    // and parameters
-    if( opts.responseType ){
-	xhr.responseType = opts.responseType;
-    } else {
-	xhr.responseType = "blob";
-    }
-    if( JS9.globalOpts.xtimeout ){
-	xhr.timeout = JS9.globalOpts.xtimeout;
-    }
-    xhr.onload = () => {
-	let blob;
-        if( xhr.readyState === 4 ){
-	    if( xhr.status === 200 || xhr.status === 0 ){
-		// delete fetch status so JS9.error() does not process it
-		delete JS9.fetchURL.status;
-		if( xhr.responseType === "blob" ){
-	            blob = new Blob([xhr.response]);
-		    // discard path (or scheme) up to slashes
-		    // remove trailing ? params
-		    if( name.match("://") ){
-			blob.name = name.split("/").reverse()[0]
-			    .replace(/\?.*$/, "");
-		    } else {
-			blob.name = name;
-		    }
-		    // hack for Google Drive's lack of a filename
-		    if( blob.name === "uc" ){
-			blob.name = `google_${JS9.uniqueID()}.fits`;
-		    }
-		    if( handler ){
-			handler(blob, opts);
-		    } else {
-			JS9.Load(blob, opts);
-		    }
-		} else {
-		    if( opts.display ){
-			handler(xhr.response, opts, {display: opts.display});
-		    } else {
-			handler(xhr.response, opts);
-		    }
+	// fetch a file URL (as a blob) and process it
+	// (as of 2/2015: can't use $.ajax to retrieve a blob: use low-level xhr)
+	JS9.fetchURL = function (name, url, opts, handler) {
+		let nurl;
+		const xhr = new XMLHttpRequest();
+		// opts is optional
+		opts = opts || {};
+		// sanity check
+		if (!name && !url) {
+			JS9.error("invalid url specification for fetchURL");
 		}
-	    } else if( xhr.status === 404 ){
-		JS9.error(`could not find ${url}`);
-	    } else {
-		JS9.error(`can't load: ${url} ${xhr.statusText} ${xhr.status}`);
-	    }
-	}
-    };
-    xhr.onerror = () => {
-	JS9.error(`cannot load: ${url} ... please check the url/pathname`);
-    };
-    xhr.ontimeout = () => {
-	JS9.error(`timeout awaiting response from server: ${url}`);
-    };
-    // hack: set fetch status for JS9.error() to sense and pass on
-    // this will be picked up by getStatus("load")
-    JS9.fetchURL.status = "processing";
-    // fetch the data!
-    try{ xhr.send(); }
-    catch(e){ JS9.error(`request to load ${url} failed`, e); }
-};
+		// either url or name can be blank
+		if (!url) {
+			url = name;
+			name = /([^\\/]+)$/.exec(url)[1];
+		}
+		if (!name) {
+			name = /([^\\/]+)$/.exec(url)[1];
+		}
+		// use fits proxy, if necessary
+		if (opts.proxy && JS9.globalOpts.cgiProxy &&
+			url.match(/\.(fits|ftz|fz|fits\.gz|fits\.bz2)(\?.*)?$/)) {
+			url = `${JS9.globalOpts.cgiProxy}?fits=${url}`;
+		}
+		// avoid the cache (Safari is especially aggressive) for FITS files
+		if (!opts.allowCache && !url.match(/\?/)) {
+			nurl = `${url}?r=${Math.random()}`;
+		} else {
+			nurl = url;
+		}
+		// change $JS9_DIR back to install dir
+		nurl = nurl.replace(/^\${JS9_DIR}\//, JS9.INSTALLDIR);
+		// set up connection
+		xhr.open("GET", nurl, true);
+		// and parameters
+		if (opts.responseType) {
+			xhr.responseType = opts.responseType;
+		} else {
+			xhr.responseType = "blob";
+		}
+		if (JS9.globalOpts.xtimeout) {
+			xhr.timeout = JS9.globalOpts.xtimeout;
+		}
+		xhr.onload = () => {
+			let blob;
+			if (xhr.readyState === 4) {
+				if (xhr.status === 200 || xhr.status === 0) {
+					// delete fetch status so JS9.error() does not process it
+					delete JS9.fetchURL.status;
+					if (xhr.responseType === "blob") {
+						blob = new Blob([xhr.response]);
+						// discard path (or scheme) up to slashes
+						// remove trailing ? params
+						if (name.match("://")) {
+							blob.name = name.split("/").reverse()[0]
+								.replace(/\?.*$/, "");
+						} else {
+							blob.name = name;
+						}
+						// hack for Google Drive's lack of a filename
+						if (blob.name === "uc") {
+							blob.name = `google_${JS9.uniqueID()}.fits`;
+						}
+						if (handler) {
+							handler(blob, opts);
+						} else {
+							JS9.Load(blob, opts);
+						}
+					} else {
+						if (opts.display) {
+							handler(xhr.response, opts, { display: opts.display });
+						} else {
+							handler(xhr.response, opts);
+						}
+					}
+				} else if (xhr.status === 404) {
+					JS9.error(`could not find ${url}`);
+				} else {
+					JS9.error(`can't load: ${url} ${xhr.statusText} ${xhr.status}`);
+				}
+			}
+		};
+		xhr.onerror = () => {
+			JS9.error(`cannot load: ${url} ... please check the url/pathname`);
+		};
+		xhr.ontimeout = () => {
+			JS9.error(`timeout awaiting response from server: ${url}`);
+		};
+		// hack: set fetch status for JS9.error() to sense and pass on
+		// this will be picked up by getStatus("load")
+		JS9.fetchURL.status = "processing";
+		// fetch the data!
+		try { xhr.send(); }
+		catch (e) { JS9.error(`request to load ${url} failed`, e); }
+	};
 
 // JS9 wrapper around saveAs:
 // deal with pathnames in Electron desktop app
@@ -27444,68 +27444,68 @@ JS9.mkPublic("UnremoveRegions", function(...args){
     return null;
 });
 
-// load a DS9/funtools regions file
-JS9.mkPublic("LoadRegions", function(...args){
+  // load a DS9/funtools regions file
+  JS9.mkPublic("LoadRegions", function (...args) {
     let s, reader, file, opts;
     const obj = JS9.parsePublicArgs(args);
     const im = JS9.getImage(obj.display);
     const addregions = (reg, ropts) => {
-	if( ropts && ropts.display !== undefined ){ delete ropts.display; }
-	// add the regions
-	im.addShapes("regions", reg, ropts);
-	// set status
-	im.setStatus("loadRegions", "complete");
-	// onload callback, if necessary
-	if( opts && opts.onload ){
-	    try{ JS9.xeqByName(opts.onload, window, im); }
-	    catch(e){ JS9.error("in regions onload callback", e, false); }
-	}
+      if (ropts && ropts.display !== undefined) { delete ropts.display; }
+      // add the regions
+      im.addShapes("regions", reg, ropts);
+      // set status
+      im.setStatus("loadRegions", "complete");
+      // onload callback, if necessary
+      if (opts && opts.onload) {
+        try { JS9.xeqByName(opts.onload, window, im); }
+        catch (e) { JS9.error("in regions onload callback", e, false); }
+      }
     };
     file = obj.argv[0];
     opts = obj.argv[1];
     // sanity check
-    if( !file ){
-	JS9.error("JS9.LoadRegions: no file specified for regions load");
+    if (!file) {
+      JS9.error("JS9.LoadRegions: no file specified for regions load");
     }
     // no action if no current image
-    if( !im ){
-	return;
+    if (!im) {
+      return;
     }
     // set status
     im.setStatus("loadRegions", "processing");
     // opts is optional
     opts = opts || {};
     // opts can be an object or json
-    if( typeof opts === "object" ){
-	// make a copy so we can modify it
-	opts = $.extend(true, {}, opts);
-    } else if( typeof opts === "string" ){
-	// convert json to object
-	try{ opts = JSON.parse(opts); }
-	catch(e){ opts = {}; }
+    if (typeof opts === "object") {
+      // make a copy so we can modify it
+      opts = $.extend(true, {}, opts);
+    } else if (typeof opts === "string") {
+      // convert json to object
+      try { opts = JSON.parse(opts); }
+      catch (e) { opts = {}; }
     }
     // convert blob to string
-    if( typeof file === "object" ){
-	s = file.path || file.name;
-	if( s ){
-	    opts.file = s.split("/").reverse()[0];
-	}
-	// file reader object
-	reader = new FileReader();
-	reader.onload = (ev) => {
-	    addregions(ev.target.result, opts);
-	};
-	reader.readAsText(file);
-    } else if( typeof file === "string" ){
-	opts.responseType = "text";
-	file = JS9.fixPath(file, opts);
-	opts.file = file.split("/").reverse()[0];
-	JS9.fetchURL(null, file, opts, addregions);
+    if (typeof file === "object") {
+      s = file.path || file.name;
+      if (s) {
+        opts.file = s.split("/").reverse()[0];
+      }
+      // file reader object
+      reader = new FileReader();
+      reader.onload = (ev) => {
+        addregions(ev.target.result, opts);
+      };
+      reader.readAsText(file);
+    } else if (typeof file === "string") {
+      opts.responseType = "text";
+      file = JS9.fixPath(file, opts);
+      opts.file = file.split("/").reverse()[0];
+      JS9.fetchURL(null, file, opts, addregions);
     } else {
-	// oops!
-	JS9.error(`unknown file type for LoadRegions: ${typeof file}`);
+      // oops!
+      JS9.error(`unknown file type for LoadRegions: ${typeof file}`);
     }
-});
+  });
 
 // construct directory starting with where JS9 is installed
 JS9.mkPublic("InstallDir", function(dir){
